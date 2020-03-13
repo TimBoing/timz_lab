@@ -1,7 +1,7 @@
 const moveBlackLinesInCircle = () => {
   const animationStarter = document.getElementById('animation-starter');
   const container = document.querySelector('.loaders-container');
-  const lineNum = 100;
+  const lineNum = 50;
 
   if(!animationStarter) return;
 
@@ -14,6 +14,9 @@ const moveBlackLinesInCircle = () => {
       blackLine.addEventListener('transitionend', (event) => {
         if(!blackLine.parentNode) return;
         blackLine.parentNode.removeChild(blackLine); // autodestruction after
+        // window.location.href = "http://www.w3schools.com";
+        animationStarter.style.transform = 'scale(1)';
+
       })
     });
   }
@@ -44,7 +47,10 @@ const moveBlackLinesInCircle = () => {
   }
 
   animationStarter.addEventListener('click', (event) => {
+    animationStarter.style.transform = 'scale(0.4)';
     startAnimation();
+
+    // const myInterval = setInterval(startAnimation, 1000);
   });
 
 }
