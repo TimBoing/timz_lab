@@ -1,0 +1,20 @@
+.visit-card-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.visit-card{
+  margin: 20px;
+  background-color: white;
+  width: 600px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  transform: perspective(600px) rotateY(0deg);
+
+}

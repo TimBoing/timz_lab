@@ -1,0 +1,60 @@
+.loaders-container{
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #EDD11E;
+}
+
+.moving-black-line{
+  position: absolute;
+  background-color: black;
+  height: 2px;
+  width: 100px;
+  transition: all 0.8s;
+  right: 0;
+}
+
+#line-1{
+  top: 10%;
+  width: 200px;
+}
+
+#line-2{
+  top: 20%;
+}
+
+#line-3{
+  top: 30%;
+}
+
+#line-4{
+  top: 40%;
+}
+
+#line-5{
+  top: 50%;
+}
+
+#line-6{
+  top: 60%;
+  background-color: red;
+}
+
+#line-7{
+  top: 70%;
+}
+
+#line-8{
+  top: 80%;
+}
+
+#line-9{
+  top: 90%;
+}
+
+#line-10{
+  top: 100%;
+}
