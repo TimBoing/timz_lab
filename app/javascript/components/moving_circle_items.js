@@ -11,6 +11,10 @@ const moveBlackLinesInCircle = () => {
     blackLines.forEach(blackLine => {
       rotationAngle += (360 / lineNum);
       blackLine.style.transform = `rotate(${rotationAngle}deg) translate(1000px)`;
+      blackLine.addEventListener('transitionend', (event) => {
+        if(!blackLine.parentNode) return;
+        blackLine.parentNode.removeChild(blackLine); // autodestruction after
+      })
     });
   }
 
