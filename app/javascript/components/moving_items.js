@@ -18,9 +18,12 @@ const moveBlackLines = () => {
       let line = document.createElement("div");
       let randomWidth = Math.floor(Math.random() * 300);
       let randomTop = Math.floor(Math.random() * 100);
+      let randomRight = Math.floor(Math.random() * 10);
+
       line.classList.add("moving-black-line");
       line.style.width = `${randomWidth}px`;
       line.style.top = `${randomTop}%`;
+      line.style.right = `${randomRight}%`;
       container.appendChild(line);
     }
 
