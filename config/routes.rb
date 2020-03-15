@@ -6,5 +6,6 @@ Rails.application.routes.draw do
   get '/loaders', to: 'pages#loaders'
   get '/fonts', to: 'pages#fonts'
   get '/themes', to: 'pages#themes'
+  get '/oeil', to: 'pages#oeil'
 
 end

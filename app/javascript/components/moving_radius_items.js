@@ -12,6 +12,7 @@ const moveBlackCircles = () => {
       // blackCircle.style.transformOrigin = "0 0";
       blackCircle.style.height = '1500px';
       blackCircle.style.width = '1500px';
+      blackCircle.style.transform = 'rotate(100deg)';
       blackCircle.addEventListener('transitionend', (event) => {
         if(blackCircle.parentNode){
           blackCircle.parentNode.removeChild(blackCircle); // autodestruction after

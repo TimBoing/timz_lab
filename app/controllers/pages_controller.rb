@@ -16,5 +16,9 @@ class PagesController < ApplicationController
   def themes
   end
 
+  def oeil
+    @jojo = 32
+    @table = (1..20)
+  end
 
 end

@@ -24,9 +24,10 @@
 
 .moving-circle{
   position: absolute;
-  border: 1px solid black;
+  border-top: 1px solid black;
+  border-right: 1px solid black;
   height: 50px;
   width: 50px;
-  transition: all 5s;
+  transition: all 1s;
   border-radius: 50%;
 }
