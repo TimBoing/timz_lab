@@ -7,5 +7,7 @@ Rails.application.routes.draw do
   get '/fonts', to: 'pages#fonts'
   get '/themes', to: 'pages#themes'
   get '/oeil', to: 'pages#oeil'
+  get '/max', to: 'pages#max'
+  get '/three', to: 'pages#three'
 
 end

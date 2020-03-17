@@ -21,4 +21,13 @@ class PagesController < ApplicationController
     @table = (1..20)
   end
 
+  def max
+
+  end
+
+
+  def three
+  end
+
+
 end
