@@ -7,36 +7,84 @@ const testsThree = () => {
   if(!checkPage) return;
 
 
+  // Basic setup
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.1, 1000 );
-
+  const camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 500  );
   const renderer = new THREE.WebGLRenderer();
   renderer.setSize( window.innerWidth, window.innerHeight );
   document.body.appendChild( renderer.domElement );
 
-  // let geometry = new THREE.BoxGeometry();
-  // let material = new THREE.MeshNormalMaterial();
-  // const cube = new THREE.Mesh( geometry, material );
+  //Playing with camera
+  let cameraX = 0;
+  let cameraY = 10;
+  let cameraZ = 20;
+  let movingFactor = 1;
 
-  const geometry = new THREE.SphereGeometry(1, 32, 32);
+  camera.position.set( cameraX, cameraY, cameraZ );
+  camera.lookAt( 0, 0, 0 );
+
+  const moveCamera = (e) => {
+    switch(e.keyCode){
+      case 37 : //left
+      cameraX = cameraX - movingFactor;
+      break;
+      case 39 : // right
+      cameraX = cameraX + movingFactor;
+      break;
+      case 38 : // up
+      cameraY = cameraY + movingFactor;
+      break;
+      case 40 : // down
+      cameraY = cameraY - movingFactor;
+      break;
+    }
+
+    camera.position.set( cameraX, cameraY, cameraZ );
+    camera.lookAt( 0, 0, 0 );
+  }
+
+  // Grid helper
+  const size = 20;
+  const divisions = 20;
+  const gridHelper = new THREE.GridHelper( size, divisions );
+  scene.add( gridHelper );
+
+
+  // Creating a sphere
+  const geometry = new THREE.SphereGeometry(1, 20, 20); // The high level of last parameters allow a nice round effect
   const material = new THREE.MeshNormalMaterial();
   const sphere = new THREE.Mesh( geometry, material );
+  sphere.position.set(0,1,0)
   scene.add( sphere );
 
-  // scene.add( cube );
+  // Creating a cube
+  const cube_geo = new THREE.BoxGeometry()
+  const cube_mat = new THREE.MeshNormalMaterial();
+  const cube = new THREE.Mesh( cube_geo, cube_mat );
+  cube.position.set(0, 0.5, 5)
+  scene.add( cube );
 
-  camera.position.z = 5;
+  // Creating lines
+  const line_material = new THREE.LineBasicMaterial();
+  const points = [];
+  points.push( new THREE.Vector3( 0, 0, 0 ) );
+  points.push( new THREE.Vector3( 0, 10, 0 ) );
+  const line_geometry = new THREE.BufferGeometry().setFromPoints( points );
+  const line = new THREE.Line( line_geometry, line_material );
+  scene.add( line );
+
 
   function animate() {
     requestAnimationFrame( animate );
     sphere.rotation.x += 0.01;
     sphere.rotation.y += 0.01;
+
     renderer.render( scene, camera );
   }
   animate();
 
 
-
+  window.addEventListener('keydown', moveCamera);
 
 
 
