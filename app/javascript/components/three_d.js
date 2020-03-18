@@ -6,62 +6,104 @@ const testsThree = () => {
   const checkPage = document.getElementById('three-activation')
   if(!checkPage) return;
 
-
   // Basic setup
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 500  );
   const renderer = new THREE.WebGLRenderer();
+
+  //Playing with camera
+  camera.position.set( 0, 10, 20 );
+  camera.lookAt( 0, 0, 0 );
+
+  //Main variables
+  let mouse = new THREE.Vector2();
+  let raycaster = new THREE.Raycaster();
+  let intersects;
+  let selectedObject = camera;
+  let selectedObjectInfo = 'Camera';
+  let selectedObjectX = 0;
+  let selectedObjectY = 10;
+  let selectedObjectZ = 20;
+  let movingFactor = 1;
+
+
+  //Display the whole machinery
   renderer.setSize( window.innerWidth, window.innerHeight );
   document.body.appendChild( renderer.domElement );
 
-  //Playing with camera
-  let cameraX = 0;
-  let cameraY = 10;
-  let cameraZ = 20;
-  let movingFactor = 1;
 
-  camera.position.set( cameraX, cameraY, cameraZ );
-   checkPage.innerHTML = `
-      x : ${cameraX}
-      <br>
-      y : ${cameraY}
-      <br>
-      z : ${cameraZ}`;
-  camera.lookAt( 0, 0, 0 );
+  // Preparing to move objects
 
-  const moveCamera = (e) => {
+  const getSelectedObjectPosition = () => {
+    selectedObjectX = selectedObject.position.x;
+    selectedObjectY = selectedObject.position.y;
+    selectedObjectZ = selectedObject.position.z;
+  }
+
+  const drawInfo = () => {
+
+    if(selectedObject.geometry) selectedObjectInfo = selectedObject.geometry.type;
+
+    checkPage.innerHTML = `
+      x : ${selectedObjectX}
+      <br>
+      y : ${selectedObjectY}
+      <br>
+      z : ${selectedObjectZ}
+      <br>
+      selectedObject: ${selectedObjectInfo}`;
+      // console.log(selectedObject.geometry.type);
+  }
+
+
+
+
+  const keyboardShortcuts = (e) => {
     switch(e.keyCode){
       case 37 : //left
-      cameraX = cameraX - movingFactor;
+      selectedObjectX = selectedObjectX - movingFactor;
       break;
       case 39 : // right
-        cameraX = cameraX + movingFactor;
+        selectedObjectX = selectedObjectX + movingFactor;
       break;
       case 38 : // up
-      cameraY = cameraY + movingFactor;
+      selectedObjectY = selectedObjectY + movingFactor;
       break;
       case 40 : // down
-      cameraY = cameraY - movingFactor;
+      selectedObjectY = selectedObjectY - movingFactor;
       break;
       case 87 : // w
-      cameraZ = cameraZ - movingFactor;
+      selectedObjectZ = selectedObjectZ - movingFactor;
       break;
       case 83 : // s
-      cameraZ = cameraZ + movingFactor;
+      selectedObjectZ = selectedObjectZ + movingFactor;
       break;
-      // default:
-      // console.log(e.keyCode);
+      case 78 : // n
+      const newGeo = new THREE.SphereGeometry(1, 15, 15); // The high level of last parameters allow a nice round effect
+      const newMat = new THREE.MeshNormalMaterial();
+      const newObj = new THREE.Mesh( newGeo, newMat );
+      newObj.position.set(0,0,0)
+      selectedObject = newObj;
+      getSelectedObjectPosition();
+      scene.add( newObj );
+      break;
+      case 68 : // d
+      scene.remove(selectedObject);
+      break;
+      case 67 : // c
+      selectedObject = camera;
+      selectedObjectInfo = "Camera";
+      getSelectedObjectPosition();
+      break;
+      default:
+      console.log(e.keyCode);
     }
-    checkPage.innerHTML = `
-      x : ${cameraX}
-      <br>
-      y : ${cameraY}
-      <br>
-      z : ${cameraZ}`;
 
-    camera.position.set( cameraX, cameraY, cameraZ );
+    drawInfo();
+    selectedObject.position.set( selectedObjectX, selectedObjectY, selectedObjectZ );
     camera.lookAt( 0, 0, 0 );
   }
+
 
   // Grid helper
   const size = 20;
@@ -71,7 +113,7 @@ const testsThree = () => {
 
 
   // Creating a sphere
-  const geometry = new THREE.SphereGeometry(1, 20, 20); // The high level of last parameters allow a nice round effect
+  const geometry = new THREE.SphereGeometry(1, 15, 15); // The high level of last parameters allow a nice round effect
   const material = new THREE.MeshNormalMaterial();
   const sphere = new THREE.Mesh( geometry, material );
   sphere.position.set(0,1,0)
@@ -94,7 +136,7 @@ const testsThree = () => {
   scene.add( line );
 
 
-  function animate() {
+  const animate = () => {
     requestAnimationFrame( animate );
     sphere.rotation.x += 0.01;
     cube.rotation.x += 0.01;
@@ -103,12 +145,42 @@ const testsThree = () => {
 
     renderer.render( scene, camera );
   }
+
+  const onMouseMove = ( event )  => {
+
+    // calculate mouse position in normalized device coordinates
+    // (-1 to +1) for both components
+
+    mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+    mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+    // update the picking ray with the camera and mouse position
+    raycaster.setFromCamera( mouse, camera );
+
+    // calculate objects intersecting the picking ray
+    intersects = raycaster.intersectObjects( scene.children );
+
+  }
+
+  const onMouseClick = () => {
+
+    if(!intersects[0]) return;
+    selectedObject = intersects[0].object;
+    getSelectedObjectPosition();
+    drawInfo();
+
+    // for ( let i = 0; i < intersects.length; i++ ) {
+    //   alert(intersects[ i ].object.name);
+    //   // intersects[ i ].object.material.color.set( 0xff0000 );
+    // }
+  }
+
+
+
+  window.addEventListener('keydown', keyboardShortcuts);
+  window.addEventListener( 'mousemove', onMouseMove, false );
+  window.addEventListener( 'click', onMouseClick, false );
+  drawInfo();
   animate();
-
-
-  window.addEventListener('keydown', moveCamera);
-
-
 
 
 }
