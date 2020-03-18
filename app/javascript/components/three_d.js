@@ -21,6 +21,12 @@ const testsThree = () => {
   let movingFactor = 1;
 
   camera.position.set( cameraX, cameraY, cameraZ );
+   checkPage.innerHTML = `
+      x : ${cameraX}
+      <br>
+      y : ${cameraY}
+      <br>
+      z : ${cameraZ}`;
   camera.lookAt( 0, 0, 0 );
 
   const moveCamera = (e) => {
@@ -29,7 +35,7 @@ const testsThree = () => {
       cameraX = cameraX - movingFactor;
       break;
       case 39 : // right
-      cameraX = cameraX + movingFactor;
+        cameraX = cameraX + movingFactor;
       break;
       case 38 : // up
       cameraY = cameraY + movingFactor;
@@ -37,7 +43,21 @@ const testsThree = () => {
       case 40 : // down
       cameraY = cameraY - movingFactor;
       break;
+      case 87 : // w
+      cameraZ = cameraZ - movingFactor;
+      break;
+      case 83 : // s
+      cameraZ = cameraZ + movingFactor;
+      break;
+      // default:
+      // console.log(e.keyCode);
     }
+    checkPage.innerHTML = `
+      x : ${cameraX}
+      <br>
+      y : ${cameraY}
+      <br>
+      z : ${cameraZ}`;
 
     camera.position.set( cameraX, cameraY, cameraZ );
     camera.lookAt( 0, 0, 0 );
@@ -77,7 +97,9 @@ const testsThree = () => {
   function animate() {
     requestAnimationFrame( animate );
     sphere.rotation.x += 0.01;
+    cube.rotation.x += 0.01;
     sphere.rotation.y += 0.01;
+    cube.rotation.y += 0.01;
 
     renderer.render( scene, camera );
   }
