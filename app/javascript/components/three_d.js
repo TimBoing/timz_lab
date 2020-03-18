@@ -26,11 +26,17 @@ const testsThree = () => {
   let selectedObjectZ = 20;
   let movingFactor = 1;
 
+  // lights
+
+  // const ambientLight = new THREE.AmbientLight( 0x606060 );
+  // scene.add( ambientLight );
+  // const directionalLight = new THREE.DirectionalLight( 0xffffff );
+  // directionalLight.position.set( 1, 0.75, 0.5 ).normalize();
+  // scene.add( directionalLight );
 
   //Display the whole machinery
   renderer.setSize( window.innerWidth, window.innerHeight );
   document.body.appendChild( renderer.domElement );
-
 
   // Preparing to move objects
 
@@ -118,6 +124,13 @@ const testsThree = () => {
         scene.add( newObjCylinder );
         break;
 
+      // Tests
+      case 81 :
+        // selectedObject.geometry.setAttributes('height', 15);
+         console.log(selectedObject);
+         console.log(selectedObject.geometry.parameters);
+         // height = 3;
+        break;
       default:
       console.log(e.keyCode);
     }
@@ -159,14 +172,18 @@ const testsThree = () => {
   scene.add( line );
 
 
+  let i = 0;
   const animate = () => {
-    requestAnimationFrame( animate );
-    sphere.rotation.x += 0.01;
-    cube.rotation.x += 0.01;
-    sphere.rotation.y += 0.01;
-    cube.rotation.y += 0.01;
 
+    requestAnimationFrame( animate );
+    // sphere.rotation.x += 0.01;
+    // cube.rotation.x += 0.01;
+    // sphere.rotation.y += 0.01;
+    // cube.rotation.y += 0.01;
+
+    cube.scale.y = Math.sin(i) * 10;
     renderer.render( scene, camera );
+    i += 0.1;
   }
 
   const onMouseMove = ( event )  => {
