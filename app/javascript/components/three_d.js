@@ -60,41 +60,64 @@ const testsThree = () => {
 
   const keyboardShortcuts = (e) => {
     switch(e.keyCode){
+
+      //Moving objects (including camera)
       case 37 : //left
-      selectedObjectX = selectedObjectX - movingFactor;
-      break;
+        selectedObjectX = selectedObjectX - movingFactor;
+        break;
       case 39 : // right
         selectedObjectX = selectedObjectX + movingFactor;
-      break;
+        break;
       case 38 : // up
-      selectedObjectY = selectedObjectY + movingFactor;
-      break;
+        selectedObjectY = selectedObjectY + movingFactor;
+        break;
       case 40 : // down
-      selectedObjectY = selectedObjectY - movingFactor;
-      break;
+        selectedObjectY = selectedObjectY - movingFactor;
+        break;
       case 87 : // w
-      selectedObjectZ = selectedObjectZ - movingFactor;
-      break;
+        selectedObjectZ = selectedObjectZ - movingFactor;
+        break;
       case 83 : // s
-      selectedObjectZ = selectedObjectZ + movingFactor;
-      break;
-      case 78 : // n
-      const newGeo = new THREE.SphereGeometry(1, 15, 15); // The high level of last parameters allow a nice round effect
-      const newMat = new THREE.MeshNormalMaterial();
-      const newObj = new THREE.Mesh( newGeo, newMat );
-      newObj.position.set(0,0,0)
-      selectedObject = newObj;
-      getSelectedObjectPosition();
-      scene.add( newObj );
-      break;
+        selectedObjectZ = selectedObjectZ + movingFactor;
+        break;
       case 68 : // d
-      scene.remove(selectedObject);
-      break;
+        scene.remove(selectedObject);
+        break;
       case 67 : // c
-      selectedObject = camera;
-      selectedObjectInfo = "Camera";
-      getSelectedObjectPosition();
-      break;
+        selectedObject = camera;
+        selectedObjectInfo = "Camera";
+        getSelectedObjectPosition();
+        break;
+
+      // Creating new objects
+      case 49 : // 1 ==> Square
+        const newGeoBox = new THREE.BoxGeometry();
+        const newMatBox = new THREE.MeshNormalMaterial();
+        const newObjBox = new THREE.Mesh( newGeoBox, newMatBox );
+        newObjBox.position.set(0,0,0);
+        selectedObject = newObjBox;
+        getSelectedObjectPosition();
+        scene.add( newObjBox );
+        break;
+      case 50 : // 2 ==> sphere
+        const newGeoSphere = new THREE.SphereGeometry(1, 15, 15); // The high level of last parameters allow a nice round effect
+        const newMatSphere = new THREE.MeshNormalMaterial();
+        const newObjSphere = new THREE.Mesh( newGeoSphere, newMatSphere );
+        newObjSphere.position.set(0,0,0);
+        selectedObject = newObjSphere;
+        getSelectedObjectPosition();
+        scene.add( newObjSphere );
+        break;
+      case 51 : // 3 ==> cylindre
+        const newGeoCylinder = new THREE.CylinderGeometry( 1, 1, 2, 32 ); // The high level of last parameters allow a nice round effect
+        const newMatCylinder = new THREE.MeshNormalMaterial();
+        const newObjCylinder = new THREE.Mesh( newGeoCylinder, newMatCylinder );
+        newObjCylinder.position.set(0,0,0);
+        selectedObject = newObjCylinder;
+        getSelectedObjectPosition();
+        scene.add( newObjCylinder );
+        break;
+
       default:
       console.log(e.keyCode);
     }
