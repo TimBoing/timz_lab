@@ -1,2 +1,18 @@
 <h1>Pages#home</h1>
 <p>Find me in app/views/pages/home.html.erb</p>
+<div id="test-keys"></div>
+
+<table>
+  <tr>
+    <th>Sector</th>
+    <th>Sector Performance</th>
+  </tr>
+  <% @sectors.each do |s| %>
+    <tr>
+      <td><%= s.name %></td>
+      <td><%= s.performance %></td>
+
+    </tr>
+
+  <% end %>
+</table>

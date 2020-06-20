@@ -9,5 +9,8 @@ Rails.application.routes.draw do
   get '/oeil', to: 'pages#oeil'
   get '/max', to: 'pages#max'
   get '/three', to: 'pages#three'
+  get '/three_sandbox', to: 'pages#three_sandbox'
+  get '/fractal_tree', to: 'pages#fractal_tree'
+  get '/clean_three', to: 'pages#clean_three'
 
 end
