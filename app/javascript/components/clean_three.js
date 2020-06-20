@@ -49,10 +49,16 @@ const cleanThree = () => {
 
       this.brancheMere = brancheMere;
       this.init = false;
-      if(Math.random() > 0.5){
+      if(Math.random() >= 0.5){
         this.cos = true;
       } else{
         this.cos = false;
+      }
+
+      if(Math.random() >= 0.5){
+        this.plus = true;
+      }else{
+        this.plus = false;
       }
 
       if(brancheMere.init == true){
@@ -69,12 +75,20 @@ const cleanThree = () => {
         let y1 = this.brancheMere.origin.y + Math.cos(this.brancheMere.angle) * this.brancheMere.length * 0.62;
         let z1;
         if(this.brancheMere.brancheMere.init == true){
-          z1 = 0;
+          z1 = this.brancheMere.brancheMere.origin.z;
         }else{
           if(this.brancheMere.cos == true){
-            z1 = this.brancheMere.origin.z + Math.cos(this.brancheMere.angle) * this.brancheMere.length * 0.62;
+            if(this.brancheMere.plus == true){
+              z1 = this.brancheMere.origin.z + Math.cos(this.brancheMere.angle) * this.brancheMere.length * 0.62;
+            }else{
+              z1 = this.brancheMere.origin.z - Math.cos(this.brancheMere.angle) * this.brancheMere.length * 0.62;
+            }
           }else{
-            z1 = this.brancheMere.origin.z + Math.sin(this.brancheMere.angle) * this.brancheMere.length * 0.62;
+            if(this.brancheMere.plus == true){
+              z1 = this.brancheMere.origin.z + Math.sin(this.brancheMere.angle) * this.brancheMere.length * 0.62;
+            }else{
+              z1 = this.brancheMere.origin.z - Math.sin(this.brancheMere.angle) * this.brancheMere.length * 0.62;
+            }
           }
         }
         this.origin = new THREE.Vector3( x1, y1, z1 );
@@ -85,9 +99,18 @@ const cleanThree = () => {
         let y2 = this.origin.y + Math.cos(this.angle) * this.length;
         let z2;
         if(this.cos == true){
-          z2 = this.origin.z + Math.cos(this.angle) * this.length;
+          if(this.plus == true){
+            z2 = this.origin.z + Math.cos(this.angle) * this.length;
+          }else{
+            z2 = this.origin.z - Math.cos(this.angle) * this.length;
+          }
         }else{
-          z2 = this.origin.z + Math.sin(this.angle) * this.length;
+          if(this.plus == true){
+            z2 = this.origin.z + Math.sin(this.angle) * this.length;
+          }else{
+            z2 = this.origin.z - Math.sin(this.angle) * this.length;
+
+          }
         }
 
         this.endPoint = new THREE.Vector3( x2, y2, z2 );
@@ -112,11 +135,14 @@ const cleanThree = () => {
       }else if(developBranch == 1){
         let b = new Branche(this);
       }else{
-        let a = new Branche(this);
-        let b = new Branche(this);
-        let c = new Branche(this);
-        let d = new Branche(this);
-        let e = new Branche(this);
+        for(let i = 0; i < 10; i += 1){
+          let a = new Branche(this);
+        }
+
+        // let b = new Branche(this);
+        // let c = new Branche(this);
+        // let d = new Branche(this);
+        // let e = new Branche(this);
       }
 
     }
@@ -167,9 +193,6 @@ const cleanThree = () => {
       const divisions = 20;
       const gridHelper = new THREE.GridHelper( size, divisions );
       scene.add( gridHelper );
-
-
-      arbre = new Arbre(origin, 10);
 
 
       renderer = new THREE.WebGLRenderer();
@@ -296,6 +319,18 @@ const cleanThree = () => {
   window.addEventListener('keydown', keyboardShortcuts);
   init();
   mainLoop();
+  for(let i = 0; i < 10; i += 1){
+    arbre = new Arbre(origin, 10);
+
+  }
+    // arbre = new Arbre(origin, 10);
+  // let arbre2 = new Arbre(origin, 10);
+  // let arbre3 = new Arbre(origin, 10);
+  // let arbre4 = new Arbre(origin, 10);
+  // let a = new Arbre({x: -10, y: 0, z: -10}, 10)
+  // let b = new Arbre({x: -10, y: 0, z: 10}, 10)
+  // let c = new Arbre({x: 10, y: 0, z: 10}, 10)
+  // let d = new Arbre({x: 10, y: 0, z: -10}, 10)
 
 }
 
