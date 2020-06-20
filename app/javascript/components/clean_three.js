@@ -115,6 +115,8 @@ const cleanThree = () => {
         let a = new Branche(this);
         let b = new Branche(this);
         let c = new Branche(this);
+        let d = new Branche(this);
+        let e = new Branche(this);
       }
 
     }
@@ -124,7 +126,7 @@ const cleanThree = () => {
         return 2;
       }else{
         let proba = this.length / 10; //(8cm = 80%, 30 = 30%)
-        if(Math.random() <= proba + 0.3){
+        if(Math.random() <= proba){
           return 2;
         }else{
           return 0;
