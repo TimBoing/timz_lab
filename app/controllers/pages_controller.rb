@@ -46,5 +46,8 @@ class PagesController < ApplicationController
   def clean_three
   end
 
+  def bn
+  end
+
 
 end

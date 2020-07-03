@@ -8,6 +8,7 @@ import { testsThree } from '../components/three_d';
 import { threeSandbox } from '../components/three_sandbox';
 import { fractalTree } from '../components/fractal_trees';
 import { cleanThree } from '../components/clean_three';
+import { bn } from '../components/bn';
 
 // moveBlackCircles();
 // openEye();
@@ -16,3 +17,4 @@ testsThree();
 threeSandbox();
 fractalTree();
 cleanThree();
+bn();

@@ -12,5 +12,6 @@ Rails.application.routes.draw do
   get '/three_sandbox', to: 'pages#three_sandbox'
   get '/fractal_tree', to: 'pages#fractal_tree'
   get '/clean_three', to: 'pages#clean_three'
+  get '/bn', to: 'pages#bn'
 
 end
