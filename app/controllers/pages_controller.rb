@@ -49,5 +49,12 @@ class PagesController < ApplicationController
   def bn
   end
 
+  def demonge
+  end
+
+  def smoke
+  end
+
+
 
 end

@@ -6,7 +6,7 @@ const bn = () => {
   const checkPage = document.getElementById('bn-activation')
   if(!checkPage) return;
   //---------------------------------------------------------------------------------------
-  let scene, camera, renderer, light, lightHelper, cube, cam, sphere, logo, plane;
+  let scene, camera, renderer, light, lightHelper, cube, cam, sphere, logo, plane, bottle, light2;
   const loader = new GLTFLoader();
 
   let rot = 0.05;
@@ -26,7 +26,7 @@ const bn = () => {
 
   let createPlane = () => {
     let geometry = new THREE.PlaneGeometry(100, 100, 50, 50);
-    let material = new THREE.MeshPhongMaterial({ color: 0x00a1cb, wireframe: true, shininess: 100, side: THREE.DoubleSide});
+    let material = new THREE.MeshPhongMaterial({ color: 0x000000, wireframe: true, shininess: 100, side: THREE.DoubleSide});
     plane = new THREE.Mesh(geometry, material);
 
     plane.rotation.x = Math.PI / 2;
@@ -125,6 +125,15 @@ const bn = () => {
             gltf.scene.position.x = x;
             gltf.scene.position.y = y;
             gltf.scene.position.z = z;
+            bottle = gltf.scene.children[0];
+            // bottle.material.shading = THREE.SmoothShading;
+            // bottle.material.wireframe = true;
+            // bottle.rotation.y = - Math.PI/40;
+
+            // gltf.scene.children[3].material.color.r = 254;
+            // gltf.scene.children[3].material.color.g = 86;
+            // gltf.scene.children[3].material.color.b = 0;
+            console.log(gltf.scene);
         },
         ( xhr ) => {
             // called while loading is progressing
@@ -143,15 +152,25 @@ const bn = () => {
   let init = function() {
 
       scene = new THREE.Scene();
-      scene.background = new THREE.Color(0xababab);
+      // scene.background = new THREE.Color(0XFFFFFF);
+
+      let px = checkPage.dataset.px;
+      let nx = checkPage.dataset.nx;
+      let py = checkPage.dataset.py;
+      let ny = checkPage.dataset.ny;
+      let pz = checkPage.dataset.pz;
+      let nz = checkPage.dataset.nz;
+      scene.background = new THREE.CubeTextureLoader()
+      .load([px, nx, py, ny, pz, nz]);
       // scene.add(axes);
       camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 500);
       //Playing with camera
-      camera.position.set( 0, 10, 20 );
-      camera.lookAt( 0, 0, 0 );
+      camera.position.set( 0, 1, 5 );
+      camera.lookAt( 0, 1, 0 );
       selectedObject = camera;
 
-      createPlane();
+      // createPlane();
+      // createCube();
       // createLogo();
 
       // for(let i = -10; i < 10; i += 1){
@@ -160,26 +179,57 @@ const bn = () => {
       //   }
       // }
 
-      uploadGLB(0,0,0);
+      // const promise1 = new Promise((resolve, reject) => {
+        uploadGLB(0,0,0);
+        // uploadGLB(1,0,0);
+        // uploadGLB(0,2,0);
+        // uploadGLB(1,4,0);
+      // });
+
+      // promise1.then((value) => {
+      //   console.log(bottle)
+      //   // expected output: "Success!"
+      // });
 
 
-      let ambient = new THREE.AmbientLight(0x404040,2);
-      // light = new THREE.HemisphereLight(0Xffffff,0X000000);
-      light = new THREE.DirectionalLight(0Xffffff, 2);
-      // light.target = logo;
-      light.position.y = 5;
-      light.position. x = 1;
-      light.position.z = 5;
-      // // light = new THREE.PointLight(0Xffffff,2,20,2);
-      // // light2 = new THREE.PointLight(0Xffffff,2,20,2);
-      // light.position.y = 10;
-      // light.position.x = 18;
-      // // // light.position.y = 5;
-      // light.position.z = 60;
-      // // light.castShadow = true;
 
-      scene.add(ambient);
+      light = new THREE.HemisphereLight(0xffeeb1, 0x080820, 4);
       scene.add(light);
+
+      light2 = new THREE.SpotLight(0xffa95c,4);
+      light2.position.set(-50,50,50);
+      // light2.castShadow = true;
+      scene.add( light2 );
+
+      // let ambient = new THREE.AmbientLight(0XFFFFFF,2);
+      // // light = new THREE.HemisphereLight(0Xffffff,0X000000);
+      // light = new THREE.DirectionalLight(0XFFFFFF, 2);
+      // let light2 = new THREE.DirectionalLight(0XFFFFFF, 2);
+      // let light3 = new THREE.DirectionalLight(0XFFFFFF, 2);
+      // // // light.target = logo;
+      // light.position.y = 3;
+      // light.position. x = 2;
+      // light.position.z = 3;
+
+      // light2.position.y = 3;
+      // light2.position. x = -2;
+      // light2.position.z = 3;
+
+      // light3.position.y = 0;
+      // light3.position. x = 0;
+      // light3.position.z = -3;
+      // // // light = new THREE.PointLight(0Xffffff,2,20,2);
+      // // // light2 = new THREE.PointLight(0Xffffff,2,20,2);
+      // // light.position.y = 10;
+      // // light.position.x = 18;
+      // // // // light.position.y = 5;
+      // // light.position.z = 60;
+      // // // light.castShadow = true;
+
+      // scene.add(ambient);
+      // scene.add(light);
+      // scene.add(light2);
+      // scene.add(light3);
       // scene.add(light2);
       // lightHelper = new THREE.DirectionalLightHelper(light, 5, 0x000000);
       // scene.add(lightHelper);
@@ -187,9 +237,9 @@ const bn = () => {
 
 
       // Grid helper
-      const size = 20;
-      const divisions = 20;
-      const gridHelper = new THREE.GridHelper( size, divisions );
+      // const size = 20;
+      // const divisions = 20;
+      // const gridHelper = new THREE.GridHelper( size, divisions );
       // scene.add( gridHelper );
 
 
@@ -246,11 +296,23 @@ const bn = () => {
     // }
 
     // logo.rotation.z += 0.03;
-
-    camera.position.x = 20 * Math.sin(theta);
-    camera.position.z = 20 * Math.cos(theta);
-    camera.lookAt(0,0,0);
+    if(bottle){
+      // bottle.rotation.y += 0.01;
+      // bottle.rotation.z += 0.01;
+      // bottle.rotation.y += 0.01;
+      // bottle.rotation.x += 0.01;
+    }
+    camera.position.x = 6 * Math.sin(theta);
+    camera.position.z = 6 * Math.cos(theta);
+    camera.lookAt(0,1,0);
     // lightHelper.update();
+
+    light2.position.set(
+        camera.position.x + 10,
+        camera.position.y + 10,
+        camera.position.z + 10,
+      );
+
     renderer.render(scene, camera);
     requestAnimationFrame(mainLoop);
   };
@@ -284,6 +346,20 @@ const bn = () => {
   }
 
   let rotateCam = 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   const keyboardShortcuts = (e) => {

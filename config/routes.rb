@@ -13,5 +13,7 @@ Rails.application.routes.draw do
   get '/fractal_tree', to: 'pages#fractal_tree'
   get '/clean_three', to: 'pages#clean_three'
   get '/bn', to: 'pages#bn'
+  get '/demonge', to: 'pages#demonge'
+  get '/smoke', to: 'pages#smoke'
 
 end

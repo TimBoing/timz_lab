@@ -9,6 +9,8 @@ import { threeSandbox } from '../components/three_sandbox';
 import { fractalTree } from '../components/fractal_trees';
 import { cleanThree } from '../components/clean_three';
 import { bn } from '../components/bn';
+import { demonge } from '../components/demonge';
+import { smoke } from '../components/smoke';
 
 // moveBlackCircles();
 // openEye();
@@ -18,3 +20,5 @@ threeSandbox();
 fractalTree();
 cleanThree();
 bn();
+demonge();
+smoke();
